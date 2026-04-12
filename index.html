@@ -617,8 +617,8 @@
     const status = document.getElementById('status');
 
     function resize() {
-      drawCvs.width = handCvs.width = window.innerWidth;
-      drawCvs.height = handCvs.height = window.innerHeight;
+      drawCvs.width = window.innerWidth * 0.8;
+      drawCvs.height = window.innerHeight * 0.8;
     }
     window.addEventListener('resize', resize);
     resize();
@@ -633,7 +633,7 @@
       document.getElementById('loading').style.display = 'flex';
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: 'user', width: { ideal: 1280 }, height: { ideal: 720 } }, audio: false
+          video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 720 } }, audio: false
         });
         video.srcObject = stream;
         await new Promise(r => video.onloadedmetadata = r);

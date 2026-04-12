@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -9,430 +10,843 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --panel-bg: rgba(255,255,255,0.88);
-      --panel-border: rgba(0,0,0,0.08);
+      --panel-bg: rgba(255, 255, 255, 0.88);
+      --panel-border: rgba(0, 0, 0, 0.08);
       --text-main: #1d1d1f;
       --text-muted: #86868b;
-      --accent-light: rgba(0,0,0,0.05);
+      --accent-light: rgba(0, 0, 0, 0.05);
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #000; color: var(--text-main); font-family: 'Inter', sans-serif; overflow: hidden; height: 100dvh; width: 100vw; touch-action: none; -webkit-font-smoothing: antialiased; }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #000;
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      overflow: hidden;
+      height: 100dvh;
+      width: 100vw;
+      touch-action: none;
+      -webkit-font-smoothing: antialiased;
+    }
 
     /* INTRO */
-    #intro { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: #fff; z-index: 100; padding: 2rem; }
-    .intro-box { max-width: 440px; width: 100%; }
-    .logo { font-size: 2.5rem; font-weight: 600; letter-spacing: -0.04em; color: var(--text-main); margin-bottom: 0.2rem; }
-    .tagline { font-size: 1rem; color: var(--text-muted); margin-bottom: 2.5rem; }
-    .instructions { display: flex; flex-direction: column; gap: 1.2rem; margin-bottom: 3rem; padding-left: 0.5rem; border-left: 2px solid var(--accent-light); }
-    .inst-row { display: flex; align-items: flex-start; gap: 1rem; padding-left: 1rem; }
-    .inst-icon { flex-shrink: 0; width: 20px; height: 20px; margin-top: 2px; color: var(--text-main); }
-    .inst-text { font-size: 0.95rem; line-height: 1.5; color: var(--text-main); }
-    .inst-text strong { font-weight: 600; }
-    .start-btn { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 1rem; display: flex; gap: 0.6rem; align-items: center; padding: 1rem 2rem; background: var(--text-main); color: #fff; border: none; border-radius: 8px; cursor: pointer; transition: transform 0.15s, opacity 0.15s; }
-    .start-btn:hover { opacity: 0.85; transform: translateY(-1px); }
-    .start-btn:active { transform: translateY(1px); }
+    #intro {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      z-index: 100;
+      padding: 2rem;
+    }
+
+    .intro-box {
+      max-width: 440px;
+      width: 100%;
+    }
+
+    .logo {
+      font-size: 2.5rem;
+      font-weight: 600;
+      letter-spacing: -0.04em;
+      color: var(--text-main);
+      margin-bottom: 0.2rem;
+    }
+
+    .tagline {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+    }
+
+    .instructions {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      margin-bottom: 3rem;
+      padding-left: 0.5rem;
+      border-left: 2px solid var(--accent-light);
+    }
+
+    .inst-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding-left: 1rem;
+    }
+
+    .inst-icon {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+      color: var(--text-main);
+    }
+
+    .inst-text {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: var(--text-main);
+    }
+
+    .inst-text strong {
+      font-weight: 600;
+    }
+
+    .start-btn {
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      font-size: 1rem;
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: var(--text-main);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.15s, opacity 0.15s;
+    }
+
+    .start-btn:hover {
+      opacity: 0.85;
+      transform: translateY(-1px);
+    }
+
+    .start-btn:active {
+      transform: translateY(1px);
+    }
 
     /* APP */
-    #app { position: fixed; inset: 0; display: none; }
-    #video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
-    #drawCanvas, #handCanvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-    #ui { position: absolute; inset: 0; pointer-events: none; }
+    #app {
+      position: fixed;
+      inset: 0;
+      display: none;
+    }
+
+    #video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scaleX(-1);
+    }
+
+    #drawCanvas,
+    #handCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    #ui {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
 
     /* PANELS */
-    .panel { position: absolute; background: var(--panel-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--panel-border); box-shadow: 0 4px 24px rgba(0,0,0,0.08); border-radius: 14px; display: flex; pointer-events: all; padding: 0.8rem; }
-    .left-panel  { top: 50%; left: 1.5rem;  transform: translateY(-50%); flex-direction: column; gap: 0.5rem; }
-    .right-panel { top: 50%; right: 1.5rem; transform: translateY(-50%); flex-direction: column; gap: 0.5rem; }
-    .bottom-panel { bottom: 1.5rem; left: 50%; transform: translateX(-50%); align-items: center; gap: 1rem; padding: 0.8rem 1.5rem; }
-    .divider-h { width: 100%; height: 1px; background: var(--panel-border); margin: 0.2rem 0; }
+    .panel {
+      position: absolute;
+      background: var(--panel-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--panel-border);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+      border-radius: 14px;
+      display: flex;
+      pointer-events: all;
+      padding: 0.8rem;
+    }
+
+    .left-panel {
+      top: 50%;
+      left: 1.5rem;
+      transform: translateY(-50%);
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .right-panel {
+      top: 50%;
+      right: 1.5rem;
+      transform: translateY(-50%);
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .bottom-panel {
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      align-items: center;
+      gap: 1rem;
+      padding: 0.8rem 1.5rem;
+    }
+
+    .divider-h {
+      width: 100%;
+      height: 1px;
+      background: var(--panel-border);
+      margin: 0.2rem 0;
+    }
 
     /* BUTTONS */
-    .brush-btn, .action-btn { width: 44px; height: 44px; border-radius: 10px; border: none; background: transparent; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.15s, color 0.15s; position: relative; }
-    .brush-btn svg, .action-btn svg { width: 20px; height: 20px; }
-    .brush-btn:hover, .action-btn:hover { background: var(--accent-light); color: var(--text-main); }
-    .brush-btn.active { background: var(--text-main); color: #fff; }
-    .brush-btn::after, .action-btn::after { content: attr(data-tip); position: absolute; left: calc(100% + 10px); top: 50%; transform: translateY(-50%); background: #1d1d1f; color: #fff; font-size: 0.7rem; font-weight: 500; padding: 0.3rem 0.6rem; border-radius: 6px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.15s; }
-    .right-panel .action-btn::after { left: auto; right: calc(100% + 10px); }
-    .brush-btn:hover::after, .action-btn:hover::after { opacity: 1; }
+    .brush-btn,
+    .action-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, color 0.15s;
+      position: relative;
+    }
+
+    .brush-btn svg,
+    .action-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .brush-btn:hover,
+    .action-btn:hover {
+      background: var(--accent-light);
+      color: var(--text-main);
+    }
+
+    .brush-btn.active {
+      background: var(--text-main);
+      color: #fff;
+    }
+
+    .brush-btn::after,
+    .action-btn::after {
+      content: attr(data-tip);
+      position: absolute;
+      left: calc(100% + 10px);
+      top: 50%;
+      transform: translateY(-50%);
+      background: #1d1d1f;
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 500;
+      padding: 0.3rem 0.6rem;
+      border-radius: 6px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s;
+    }
+
+    .right-panel .action-btn::after {
+      left: auto;
+      right: calc(100% + 10px);
+    }
+
+    .brush-btn:hover::after,
+    .action-btn:hover::after {
+      opacity: 1;
+    }
 
     /* COLOR PICKER */
-    .color-picker-wrap { width: 44px; height: 44px; border-radius: 50%; overflow: hidden; border: 2px solid var(--panel-border); display: flex; align-items: center; justify-content: center; position: relative; }
-    input[type="color"] { position: absolute; right: -8px; top: -8px; width: 60px; height: 60px; border: none; cursor: pointer; padding: 0; background: none; }
-    input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
-    input[type="color"]::-webkit-color-swatch { border: none; }
+    .color-picker-wrap {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid var(--panel-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    input[type="color"] {
+      position: absolute;
+      right: -8px;
+      top: -8px;
+      width: 60px;
+      height: 60px;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      background: none;
+    }
+
+    input[type="color"]::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+
+    input[type="color"]::-webkit-color-swatch {
+      border: none;
+    }
 
     /* STATUS */
-    #status { position: absolute; top: 1.5rem; left: 50%; transform: translateX(-50%); font-size: 0.78rem; font-weight: 500; letter-spacing: 0.04em; padding: 0.5rem 1.2rem; border-radius: 100px; background: var(--panel-bg); backdrop-filter: blur(10px); border: 1px solid var(--panel-border); color: var(--text-muted); box-shadow: 0 4px 12px rgba(0,0,0,0.06); pointer-events: none; transition: color 0.3s, border-color 0.3s; white-space: nowrap; }
-    #status.drawing { color: #10b981; border-color: rgba(16,185,129,0.3); }
-    #status.paused  { color: #8b5cf6; border-color: rgba(139,92,246,0.3); }
+    #status {
+      position: absolute;
+      top: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 0.5rem 1.2rem;
+      border-radius: 100px;
+      background: var(--panel-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--panel-border);
+      color: var(--text-muted);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      pointer-events: none;
+      transition: color 0.3s, border-color 0.3s;
+      white-space: nowrap;
+    }
+
+    #status.drawing {
+      color: #10b981;
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+
+    #status.paused {
+      color: #8b5cf6;
+      border-color: rgba(139, 92, 246, 0.3);
+    }
 
     /* SLIDER */
-    input[type=range] { -webkit-appearance: none; width: 120px; height: 4px; background: var(--panel-border); border-radius: 4px; outline: none; }
-    input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--text-main); cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-    .size-label { font-size: 0.75rem; color: var(--text-muted); font-weight: 500; min-width: 14px; text-align: center; }
+    input[type=range] {
+      -webkit-appearance: none;
+      width: 120px;
+      height: 4px;
+      background: var(--panel-border);
+      border-radius: 4px;
+      outline: none;
+    }
 
-    #flash { position: fixed; inset: 0; background: white; opacity: 0; pointer-events: none; z-index: 200; transition: opacity 0.05s; }
-    #flash.go { opacity: 1; }
-    #loading { position: fixed; inset: 0; background: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; z-index: 50; }
-    .spinner { width: 36px; height: 36px; border: 3px solid var(--panel-border); border-top-color: var(--text-main); border-radius: 50%; animation: spin 0.8s linear infinite; }
-    .loading-text { font-size: 0.85rem; font-weight: 500; color: var(--text-muted); }
-    @keyframes spin { to { transform: rotate(360deg); } }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--text-main);
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .size-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      min-width: 14px;
+      text-align: center;
+    }
+
+    #flash {
+      position: fixed;
+      inset: 0;
+      background: white;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 200;
+      transition: opacity 0.05s;
+    }
+
+    #flash.go {
+      opacity: 1;
+    }
+
+    #loading {
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      z-index: 50;
+    }
+
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid var(--panel-border);
+      border-top-color: var(--text-main);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    .loading-text {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
 
     @media (max-width: 600px) {
-      .left-panel  { top: auto; bottom: 5.5rem; left: 1rem;  transform: none; flex-direction: row; }
-      .right-panel { top: auto; bottom: 5.5rem; right: 1rem; transform: none; flex-direction: row; }
-      .bottom-panel { bottom: 1rem; }
-      #status { top: 1rem; font-size: 0.7rem; }
-      .divider-h { width: 1px; height: 28px; margin: 0 0.2rem; }
-      .brush-btn::after, .action-btn::after { display: none; }
+      .left-panel {
+        top: auto;
+        bottom: 5.5rem;
+        left: 1rem;
+        transform: none;
+        flex-direction: row;
+      }
+
+      .right-panel {
+        top: auto;
+        bottom: 5.5rem;
+        right: 1rem;
+        transform: none;
+        flex-direction: row;
+      }
+
+      .bottom-panel {
+        bottom: 1rem;
+      }
+
+      #status {
+        top: 1rem;
+        font-size: 0.7rem;
+      }
+
+      .divider-h {
+        width: 1px;
+        height: 28px;
+        margin: 0 0.2rem;
+      }
+
+      .brush-btn::after,
+      .action-btn::after {
+        display: none;
+      }
     }
   </style>
 </head>
+
 <body>
-<div id="flash"></div>
+  <div id="flash"></div>
 
-<!-- INTRO -->
-<div id="intro">
-  <div class="intro-box">
-    <div class="logo">SkySketch</div>
-    <div class="tagline">Draw in the air. Capture the moment.</div>
-    <div class="instructions">
-      <div class="inst-row">
-        <svg class="inst-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-        <div class="inst-text"><strong>Prop up your device</strong> so the camera can see you and both hands clearly.</div>
+  <!-- INTRO -->
+  <div id="intro">
+    <div class="intro-box">
+      <div class="logo">SkySketch</div>
+      <div class="tagline">Draw in the air. Capture the moment.</div>
+      <div class="instructions">
+        <div class="inst-row">
+          <svg class="inst-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect x="5" y="2" width="14" height="20" rx="2" />
+            <line x1="12" y1="18" x2="12.01" y2="18" />
+          </svg>
+          <div class="inst-text"><strong>Prop up your device</strong> so the camera can see you and both hands clearly.
+          </div>
+        </div>
+        <div class="inst-row">
+          <svg class="inst-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path
+              d="M18 11V6a2 2 0 0 0-4 0v0M14 10V4a2 2 0 0 0-4 0v2M10 10.5V6a2 2 0 0 0-4 0v8M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15" />
+          </svg>
+          <div class="inst-text">Raise your <strong>Index Finger</strong> to draw in the air.</div>
+        </div>
+        <div class="inst-row">
+          <svg class="inst-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 11l3 3L22 4" />
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+          </svg>
+          <div class="inst-text">Form a <strong>Fist</strong> with your other hand to pause drawing.</div>
+        </div>
+        <div class="inst-row">
+          <svg class="inst-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" />
+            <circle cx="12" cy="13" r="3" />
+          </svg>
+          <div class="inst-text">Hit <strong>Capture</strong> to save your artwork as a photo.</div>
+        </div>
       </div>
-      <div class="inst-row">
-        <svg class="inst-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-4 0v0M14 10V4a2 2 0 0 0-4 0v2M10 10.5V6a2 2 0 0 0-4 0v8M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg>
-        <div class="inst-text">Raise your <strong>Index Finger</strong> to draw in the air.</div>
-      </div>
-      <div class="inst-row">
-        <svg class="inst-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-        <div class="inst-text">Form a <strong>Fist</strong> with your other hand to pause drawing.</div>
-      </div>
-      <div class="inst-row">
-        <svg class="inst-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
-        <div class="inst-text">Hit <strong>Capture</strong> to save your artwork as a photo.</div>
-      </div>
-    </div>
-    <button class="start-btn" id="startBtn">
-      Launch SkySketch
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-    </button>
-  </div>
-</div>
-
-<!-- LOADING -->
-<div id="loading" style="display:none">
-  <div class="spinner"></div>
-  <div class="loading-text" id="loadingText">Starting camera...</div>
-</div>
-
-<!-- APP -->
-<div id="app">
-  <video id="video" autoplay playsinline muted></video>
-  <canvas id="drawCanvas"></canvas>
-  <canvas id="handCanvas"></canvas>
-  <div id="status">Point index finger to draw</div>
-  <div id="ui">
-
-    <!-- Left: Brushes + Color -->
-    <div class="panel left-panel">
-      <button class="brush-btn active" data-brush="pen" data-tip="Pen">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      <button class="start-btn" id="startBtn">
+        Launch SkySketch
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14" />
+          <path d="m12 5 7 7-7 7" />
+        </svg>
       </button>
-      <button class="brush-btn" data-brush="marker" data-tip="Marker">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11-6 6v3h3l6-6"/><path d="m22 2-3 1-4 4 3 3 4-4 1-3-1-1z"/></svg>
-      </button>
-      <button class="brush-btn" data-brush="glow" data-tip="Glow">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-      </button>
-      <button class="brush-btn" data-brush="neon" data-tip="Neon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12h6"/><path d="M12 9v6"/><circle cx="12" cy="12" r="9"/></svg>
-      </button>
-      <button class="brush-btn" data-brush="watercolor" data-tip="Watercolor">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125C13.043 18.93 12.896 18.51 12.896 18c0-.992.804-1.8 1.8-1.8h2.117C19.324 16.2 21 14.524 21 12.474 21 6.755 17.008 2 12 2z"/></svg>
-      </button>
-      <div class="divider-h"></div>
-      <div class="color-picker-wrap">
-        <input type="color" id="colorPicker" value="#000000" title="Pick color">
-      </div>
-    </div>
-
-    <!-- Right: Actions -->
-    <div class="panel right-panel">
-      <button class="action-btn" id="undoBtn" data-tip="Undo">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
-      </button>
-      <button class="action-btn" id="clearBtn" data-tip="Clear">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
-      </button>
-      <div class="divider-h"></div>
-      <button class="action-btn" id="captureBtn" data-tip="Capture">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
-      </button>
-    </div>
-
-    <!-- Bottom: Size -->
-    <div class="panel bottom-panel">
-      <span class="size-label">S</span>
-      <input type="range" id="sizeSlider" min="2" max="40" value="6">
-      <span class="size-label">L</span>
     </div>
   </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
-<script>
-// ── STATE ──
-// ── STATE & OPTIMIZATIONS ──
-let currentColor = '#000000', currentBrush = 'pen', brushSize = 6;
-let strokes = [], strokeInProgress = false;
-const MAX_UNDO = 10;
-let lastProcessingTime = 0;
-const FPS_LIMIT = 30; // Saves battery and keeps device cool
+  <!-- LOADING -->
+  <div id="loading" style="display:none">
+    <div class="spinner"></div>
+    <div class="loading-text" id="loadingText">Starting camera...</div>
+  </div>
 
-// Smoothing & Continuity
-const SMOOTH = 0.45;
-let smoothX = null, smoothY = null;
-let pts = []; // Buffer for smooth Bezier curves
+  <!-- APP -->
+  <div id="app">
+    <video id="video" autoplay playsinline muted></video>
+    <canvas id="drawCanvas"></canvas>
+    <canvas id="handCanvas"></canvas>
+    <div id="status">Point index finger to draw</div>
+    <div id="ui">
 
-const video = document.getElementById('video');
-const drawCvs = document.getElementById('drawCanvas');
-const dctx = drawCvs.getContext('2d', { willReadFrequently: true });
-const handCvs = document.getElementById('handCanvas');
-const hctx = handCvs.getContext('2d');
-const status = document.getElementById('status');
+      <!-- Left: Brushes + Color -->
+      <div class="panel left-panel">
+        <button class="brush-btn active" data-brush="pen" data-tip="Pen">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M12 20h9" />
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+          </svg>
+        </button>
+        <button class="brush-btn" data-brush="marker" data-tip="Marker">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="m9 11-6 6v3h3l6-6" />
+            <path d="m22 2-3 1-4 4 3 3 4-4 1-3-1-1z" />
+          </svg>
+        </button>
+        <button class="brush-btn" data-brush="glow" data-tip="Glow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4" />
+            <path
+              d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+          </svg>
+        </button>
+        <button class="brush-btn" data-brush="neon" data-tip="Neon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M9 12h6" />
+            <path d="M12 9v6" />
+            <circle cx="12" cy="12" r="9" />
+          </svg>
+        </button>
+        <button class="brush-btn" data-brush="watercolor" data-tip="Watercolor">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path
+              d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125C13.043 18.93 12.896 18.51 12.896 18c0-.992.804-1.8 1.8-1.8h2.117C19.324 16.2 21 14.524 21 12.474 21 6.755 17.008 2 12 2z" />
+          </svg>
+        </button>
+        <div class="divider-h"></div>
+        <div class="color-picker-wrap">
+          <input type="color" id="colorPicker" value="#000000" title="Pick color">
+        </div>
+      </div>
 
-function resize() {
-  drawCvs.width = handCvs.width = window.innerWidth;
-  drawCvs.height = handCvs.height = window.innerHeight;
-}
-window.addEventListener('resize', resize);
-resize();
+      <!-- Right: Actions -->
+      <div class="panel right-panel">
+        <button class="action-btn" id="undoBtn" data-tip="Undo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M3 7v6h6" />
+            <path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13" />
+          </svg>
+        </button>
+        <button class="action-btn" id="clearBtn" data-tip="Clear">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round">
+            <polyline points="3 6 5 6 21 6" />
+            <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+            <path d="M10 11v6M14 11v6" />
+            <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+          </svg>
+        </button>
+        <div class="divider-h"></div>
+        <button class="action-btn" id="captureBtn" data-tip="Capture">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" />
+            <circle cx="12" cy="13" r="3" />
+          </svg>
+        </button>
+      </div>
 
-// Prevent mobile "Pull-to-refresh" and scrolling
-document.body.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
+      <!-- Bottom: Size -->
+      <div class="panel bottom-panel">
+        <span class="size-label">S</span>
+        <input type="range" id="sizeSlider" min="2" max="40" value="6">
+        <span class="size-label">L</span>
+      </div>
+    </div>
+  </div>
 
-document.getElementById('startBtn').addEventListener('click', startApp);
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script>
+    // ── STATE ──
+    // ── STATE & OPTIMIZATIONS ──
+    let currentColor = '#000000', currentBrush = 'pen', brushSize = 6;
+    let strokes = [], strokeInProgress = false;
+    const MAX_UNDO = 10;
+    let lastProcessingTime = 0;
+    const FPS_LIMIT = 30; // Saves battery and keeps device cool
 
-async function startApp() {
-  document.getElementById('intro').style.display = 'none';
-  document.getElementById('loading').style.display = 'flex';
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode: 'user', width: { ideal: 1280 }, height: { ideal: 720 } }, audio: false
-    });
-    video.srcObject = stream;
-    await new Promise(r => video.onloadedmetadata = r);
-    initMediaPipe();
-  } catch(e) {
-    document.getElementById('loadingText').innerHTML = '<span style="color:#ef4444">Camera denied. Please reload.</span>';
-  }
-}
+    // Smoothing & Continuity
+    const SMOOTH = 0.45;
+    let smoothX = null, smoothY = null;
+    let pts = []; // Buffer for smooth Bezier curves
 
-let hands;
-function initMediaPipe() {
-  hands = new Hands({ locateFile: f => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${f}` });
-  hands.setOptions({ maxNumHands: 2, modelComplexity: 1, minDetectionConfidence: 0.55, minTrackingConfidence: 0.4 });
-  hands.onResults(onResults);
+    const video = document.getElementById('video');
+    const drawCvs = document.getElementById('drawCanvas');
+    const dctx = drawCvs.getContext('2d', { willReadFrequently: true });
+    const handCvs = document.getElementById('handCanvas');
+    const hctx = handCvs.getContext('2d');
+    const status = document.getElementById('status');
 
-  const camera = new Camera(video, {
-    onFrame: async () => {
-      const now = performance.now();
-      if (now - lastProcessingTime > (1000 / FPS_LIMIT)) {
-        lastProcessingTime = now;
-        await hands.send({ image: video });
-      }
-    },
-    width: 1280, height: 720
-  });
-  
-  camera.start().then(() => {
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-  });
-}
-
-// ── COORDINATE & GESTURE LOGIC ──
-function getCoords(landmark) {
-  const vw = video.videoWidth || 1280, vh = video.videoHeight || 720;
-  const cw = drawCvs.width, ch = drawCvs.height;
-  
-  const videoAspect = vw / vh;
-  const screenAspect = cw / ch;
-  let scale, offsetX = 0, offsetY = 0;
-
-  if (screenAspect > videoAspect) {
-    scale = cw / vw;
-    offsetY = (ch - vh * scale) / 2;
-  } else {
-    scale = ch / vh;
-    offsetX = (cw - vw * scale) / 2;
-  }
-
-  const rawX = (1 - landmark.x) * vw * scale + offsetX;
-  const rawY = landmark.y * vh * scale + offsetY;
-
-  if (smoothX === null) { smoothX = rawX; smoothY = rawY; }
-  smoothX = smoothX * SMOOTH + rawX * (1 - SMOOTH);
-  smoothY = smoothY * SMOOTH + rawY * (1 - SMOOTH);
-
-  return { x: smoothX, y: smoothY, z: landmark.z };
-}
-
-function classifyHand(lm) {
-  const TIP = [4,8,12,16,20], PIP = [3,6,10,14,18];
-  const up = [lm[4].x < lm[3].x];
-  for (let i = 1; i < 5; i++) up.push(lm[TIP[i]].y < lm[PIP[i]].y);
-  return {
-    pointing: up[1] && !up[2] && !up[3] && !up[4],
-    fist: !up[1] && !up[2] && !up[3] && !up[4]
-  };
-}
-
-function onResults(results) {
-  hctx.clearRect(0, 0, handCvs.width, handCvs.height);
-  let drawingLm = null, clutchActive = false;
-
-  if (results.multiHandLandmarks) {
-    for (const lm of results.multiHandLandmarks) {
-      const { pointing, fist } = classifyHand(lm);
-      if (fist) clutchActive = true;
-      if (pointing && !drawingLm) drawingLm = lm;
+    function resize() {
+      drawCvs.width = handCvs.width = window.innerWidth;
+      drawCvs.height = handCvs.height = window.innerHeight;
     }
-  }
+    window.addEventListener('resize', resize);
+    resize();
 
-  if (clutchActive || !drawingLm) {
-    status.textContent = clutchActive ? "Paused" : "Point index finger to draw";
-    status.className = clutchActive ? "paused" : "";
-    endStroke();
-    return;
-  }
+    // Prevent mobile "Pull-to-refresh" and scrolling
+    document.body.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
 
-  const pos = getCoords(drawingLm[8]);
-  status.textContent = "Drawing";
-  status.className = "drawing";
-  
-  // Feedback Cursor
-  hctx.beginPath();
-  hctx.arc(pos.x, pos.y, 12, 0, Math.PI * 2);
-  hctx.strokeStyle = currentColor;
-  hctx.lineWidth = 2;
-  hctx.stroke();
+    document.getElementById('startBtn').addEventListener('click', startApp);
 
-  drawAction(pos.x, pos.y, pos.z);
-}
-
-// ── DRAWING ENGINE ──
-function saveUndo() {
-  strokes.push(dctx.getImageData(0, 0, drawCvs.width, drawCvs.height));
-  if (strokes.length > MAX_UNDO) strokes.shift();
-}
-
-function endStroke() {
-  strokeInProgress = false;
-  pts = [];
-}
-
-function drawAction(x, y, zDepth) {
-  if (!strokeInProgress) { saveUndo(); strokeInProgress = true; pts = []; }
-  pts.push({ x, y });
-  if (pts.length < 3) return;
-
-  const p1 = pts[pts.length - 2], p2 = pts[pts.length - 1];
-  const mid0 = { x: (pts[pts.length-3].x + p1.x) / 2, y: (pts[pts.length-3].y + p1.y) / 2 };
-  const mid1 = { x: (p1.x + p2.x) / 2, y: (p1.y + p2.y) / 2 };
-
-  // Map Z-Depth to Size (Closer = Thicker)
-  const dynamicSize = Math.max(2, Math.min(brushSize * 5, (0.1 - zDepth) * 180));
-
-  dctx.save();
-  dctx.beginPath();
-  dctx.moveTo(mid0.x, mid0.y);
-
-  switch (currentBrush) {
-    case 'pen':
-      dctx.strokeStyle = currentColor;
-      dctx.lineWidth = dynamicSize;
-      dctx.lineCap = 'round';
-      dctx.quadraticCurveTo(p1.x, p1.y, mid1.x, mid1.y);
-      dctx.stroke();
-      break;
-
-    case 'marker':
-      dctx.globalAlpha = 0.5;
-      dctx.globalCompositeOperation = 'multiply';
-      dctx.strokeStyle = currentColor;
-      dctx.lineWidth = dynamicSize * 2.5;
-      dctx.lineCap = 'square';
-      dctx.quadraticCurveTo(p1.x, p1.y, mid1.x, mid1.y);
-      dctx.stroke();
-      break;
-
-    case 'glow':
-      dctx.shadowBlur = dynamicSize * 4;
-      dctx.shadowColor = currentColor;
-      dctx.strokeStyle = currentColor;
-      dctx.lineWidth = dynamicSize * 2;
-      dctx.lineCap = 'round';
-      dctx.quadraticCurveTo(p1.x, p1.y, mid1.x, mid1.y);
-      dctx.stroke();
-      break;
-
-    case 'neon':
-      dctx.lineCap = 'round';
-      dctx.quadraticCurveTo(p1.x, p1.y, mid1.x, mid1.y);
-      dctx.strokeStyle = currentColor;
-      dctx.lineWidth = dynamicSize * 3;
-      dctx.globalAlpha = 0.3;
-      dctx.stroke();
-      dctx.strokeStyle = "#FFFFFF";
-      dctx.lineWidth = dynamicSize * 0.4;
-      dctx.globalAlpha = 1;
-      dctx.stroke();
-      break;
-
-    case 'watercolor':
-      const spread = dynamicSize * 0.6;
-      for (let i = 0; i < 3; i++) {
-        const ox = (Math.random() - 0.5) * spread;
-        const oy = (Math.random() - 0.5) * spread;
-        dctx.globalAlpha = 0.05;
-        dctx.strokeStyle = currentColor;
-        dctx.lineWidth = dynamicSize * (1 + Math.random());
-        dctx.filter = 'blur(2px)';
-        dctx.beginPath();
-        dctx.moveTo(mid0.x + ox, mid0.y + oy);
-        dctx.quadraticCurveTo(p1.x + ox, p1.y + oy, mid1.x + ox, mid1.y + oy);
-        dctx.stroke();
+    async function startApp() {
+      document.getElementById('intro').style.display = 'none';
+      document.getElementById('loading').style.display = 'flex';
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: 'user', width: { ideal: 1280 }, height: { ideal: 720 } }, audio: false
+        });
+        video.srcObject = stream;
+        await new Promise(r => video.onloadedmetadata = r);
+        initMediaPipe();
+      } catch (e) {
+        document.getElementById('loadingText').innerHTML = '<span style="color:#ef4444">Camera denied. Please reload.</span>';
       }
-      break;
-  }
-  dctx.restore();
-}
+    }
 
-// ── UI CONTROLS ──
-document.getElementById('colorPicker').addEventListener('input', e => { currentColor = e.target.value; });
-document.getElementById('sizeSlider').addEventListener('input', e => { brushSize = +e.target.value; });
+    let hands;
+    function initMediaPipe() {
+      hands = new Hands({ locateFile: f => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${f}` });
+      hands.setOptions({ maxNumHands: 2, modelComplexity: 1, minDetectionConfidence: 0.55, minTrackingConfidence: 0.4 });
+      hands.onResults(onResults);
 
-document.querySelectorAll('.brush-btn').forEach(btn => btn.addEventListener('click', e => {
-  document.querySelectorAll('.brush-btn').forEach(b => b.classList.remove('active'));
-  e.currentTarget.classList.add('active');
-  currentBrush = e.currentTarget.dataset.brush;
-}));
+      const camera = new Camera(video, {
+        onFrame: async () => {
+          const now = performance.now();
+          if (now - lastProcessingTime > (1000 / FPS_LIMIT)) {
+            lastProcessingTime = now;
+            await hands.send({ image: video });
+          }
+        },
+        width: 1280, height: 720
+      });
 
-document.getElementById('undoBtn').onclick = () => { if (strokes.length) dctx.putImageData(strokes.pop(), 0, 0); };
-document.getElementById('clearBtn').onclick = () => { saveUndo(); dctx.clearRect(0,0,drawCvs.width,drawCvs.height); };
-document.getElementById('captureBtn').onclick = () => {
-  const fl = document.getElementById('flash'); fl.classList.add('go'); setTimeout(() => fl.classList.remove('go'), 150);
-  const out = document.createElement('canvas'); out.width = drawCvs.width; out.height = drawCvs.height;
-  const ctx = out.getContext('2d');
-  ctx.translate(out.width, 0); ctx.scale(-1, 1);
-  ctx.drawImage(video, 0, 0, out.width, out.height);
-  ctx.setTransform(1, 0, 0, 1, 0, 0);
-  ctx.drawImage(drawCvs, 0, 0);
-  const link = document.createElement('a'); link.download = `sky_${Date.now()}.png`; link.href = out.toDataURL(); link.click();
-};
-</script>
+      camera.start().then(() => {
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('app').style.display = 'block';
+      });
+    }
+
+    // ── COORDINATE & GESTURE LOGIC ──
+    function getCoords(landmark) {
+      const vw = video.videoWidth || 1280, vh = video.videoHeight || 720;
+      const cw = drawCvs.width, ch = drawCvs.height;
+
+      const videoAspect = vw / vh;
+      const screenAspect = cw / ch;
+      let scale, offsetX = 0, offsetY = 0;
+
+      if (screenAspect > videoAspect) {
+        scale = cw / vw;
+        offsetY = (ch - vh * scale) / 2;
+      } else {
+        scale = ch / vh;
+        offsetX = (cw - vw * scale) / 2;
+      }
+
+      const rawX = (1 - landmark.x) * vw * scale + offsetX;
+      const rawY = landmark.y * vh * scale + offsetY;
+
+      if (smoothX === null) { smoothX = rawX; smoothY = rawY; }
+      smoothX = smoothX * SMOOTH + rawX * (1 - SMOOTH);
+      smoothY = smoothY * SMOOTH + rawY * (1 - SMOOTH);
+
+      return { x: smoothX, y: smoothY, z: landmark.z };
+    }
+
+    function classifyHand(lm) {
+      const TIP = [4, 8, 12, 16, 20], PIP = [3, 6, 10, 14, 18];
+      const up = [lm[4].x < lm[3].x];
+      for (let i = 1; i < 5; i++) up.push(lm[TIP[i]].y < lm[PIP[i]].y);
+      return {
+        pointing: up[1],
+        fist: !up[1] && !up[2] && !up[3] && !up[4]
+      };
+    }
+
+    function onResults(results) {
+      hctx.clearRect(0, 0, handCvs.width, handCvs.height);
+      let drawingLm = null, clutchActive = false;
+
+      if (results.multiHandLandmarks) {
+        for (const lm of results.multiHandLandmarks) {
+          const { pointing, fist } = classifyHand(lm);
+          if (fist) clutchActive = true;
+          if (pointing && !drawingLm) drawingLm = lm;
+        }
+      }
+
+      if (clutchActive || !drawingLm) {
+        status.textContent = clutchActive ? "Paused" : "Point index finger to draw";
+        status.className = clutchActive ? "paused" : "";
+        endStroke();
+        return;
+      }
+
+      const pos = getCoords(drawingLm[8]);
+      status.textContent = "Drawing";
+      status.className = "drawing";
+
+      // Feedback Cursor
+      hctx.beginPath();
+      hctx.arc(pos.x, pos.y, 12, 0, Math.PI * 2);
+      hctx.strokeStyle = currentColor;
+      hctx.lineWidth = 2;
+      hctx.stroke();
+
+      drawAction(pos.x, pos.y, pos.z);
+    }
+
+    // ── DRAWING ENGINE ──
+    function saveUndo() {
+      strokes.push(dctx.getImageData(0, 0, drawCvs.width, drawCvs.height));
+      if (strokes.length > MAX_UNDO) strokes.shift();
+    }
+
+    function endStroke() {
+      strokeInProgress = false;
+      pts = [];
+    }
+
+    function drawAction(x, y, zDepth) {
+      if (!strokeInProgress) { saveUndo(); strokeInProgress = true; pts = []; }
+      pts.push({ x, y });
+      if (pts.length < 3) return;
+
+      const p1 = pts[pts.length - 2], p2 = pts[pts.length - 1];
+      const mid0 = { x: (pts[pts.length - 3].x + p1.x) / 2, y: (pts[pts.length - 3].y + p1.y) / 2 };
+      const mid1 = { x: (p1.x + p2.x) / 2, y: (p1.y + p2.y) / 2 };
+
+      // Map Z-Depth to Size (Closer = Thicker)
+      const dynamicSize = Math.max(2, Math.min(brushSize * 5, (0.1 - zDepth) * 180));
+
+      dctx.save();
+      dctx.beginPath();
+      dctx.moveTo(mid0.x, mid0.y);
+
+      switch (currentBrush) {
+        case 'pen':
+          dctx.strokeStyle = currentColor;
+          dctx.lineWidth = dynamicSize;
+          dctx.lineCap = 'round';
+          dctx.quadraticCurveTo(p1.x, p1.y, mid1.x, mid1.y);
+          dctx.stroke();
+          break;
+
+        case 'marker':
+          dctx.globalAlpha = 0.5;
+          dctx.globalCompositeOperation = 'multiply';
+          dctx.strokeStyle = currentColor;
+          dctx.lineWidth = dynamicSize * 2.5;
+          dctx.lineCap = 'square';
+          dctx.quadraticCurveTo(p1.x, p1.y, mid1.x, mid1.y);
+          dctx.stroke();
+          break;
+
+        case 'glow':
+          dctx.shadowBlur = dynamicSize * 4;
+          dctx.shadowColor = currentColor;
+          dctx.strokeStyle = currentColor;
+          dctx.lineWidth = dynamicSize * 2;
+          dctx.lineCap = 'round';
+          dctx.quadraticCurveTo(p1.x, p1.y, mid1.x, mid1.y);
+          dctx.stroke();
+          break;
+
+        case 'neon':
+          dctx.lineCap = 'round';
+          dctx.quadraticCurveTo(p1.x, p1.y, mid1.x, mid1.y);
+          dctx.strokeStyle = currentColor;
+          dctx.lineWidth = dynamicSize * 3;
+          dctx.globalAlpha = 0.3;
+          dctx.stroke();
+          dctx.strokeStyle = "#FFFFFF";
+          dctx.lineWidth = dynamicSize * 0.4;
+          dctx.globalAlpha = 1;
+          dctx.stroke();
+          break;
+
+        case 'watercolor':
+          const spread = dynamicSize * 0.6;
+          for (let i = 0; i < 3; i++) {
+            const ox = (Math.random() - 0.5) * spread;
+            const oy = (Math.random() - 0.5) * spread;
+            dctx.globalAlpha = 0.05;
+            dctx.strokeStyle = currentColor;
+            dctx.lineWidth = dynamicSize * (1 + Math.random());
+            dctx.filter = 'blur(2px)';
+            dctx.beginPath();
+            dctx.moveTo(mid0.x + ox, mid0.y + oy);
+            dctx.quadraticCurveTo(p1.x + ox, p1.y + oy, mid1.x + ox, mid1.y + oy);
+            dctx.stroke();
+          }
+          break;
+      }
+      dctx.restore();
+    }
+
+    // ── UI CONTROLS ──
+    document.getElementById('colorPicker').addEventListener('input', e => { currentColor = e.target.value; });
+    document.getElementById('sizeSlider').addEventListener('input', e => { brushSize = +e.target.value; });
+
+    document.querySelectorAll('.brush-btn').forEach(btn => btn.addEventListener('click', e => {
+      document.querySelectorAll('.brush-btn').forEach(b => b.classList.remove('active'));
+      e.currentTarget.classList.add('active');
+      currentBrush = e.currentTarget.dataset.brush;
+    }));
+
+    document.getElementById('undoBtn').onclick = () => { if (strokes.length) dctx.putImageData(strokes.pop(), 0, 0); };
+    document.getElementById('clearBtn').onclick = () => { saveUndo(); dctx.clearRect(0, 0, drawCvs.width, drawCvs.height); };
+    document.getElementById('captureBtn').onclick = () => {
+      const fl = document.getElementById('flash'); fl.classList.add('go'); setTimeout(() => fl.classList.remove('go'), 150);
+      const out = document.createElement('canvas'); out.width = drawCvs.width; out.height = drawCvs.height;
+      const ctx = out.getContext('2d');
+      ctx.translate(out.width, 0); ctx.scale(-1, 1);
+      ctx.drawImage(video, 0, 0, out.width, out.height);
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.drawImage(drawCvs, 0, 0);
+      const link = document.createElement('a'); link.download = `sky_${Date.now()}.png`; link.href = out.toDataURL(); link.click();
+    };
+  </script>
 </body>
+
 </html>

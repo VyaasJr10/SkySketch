@@ -404,24 +404,53 @@
         --btn: 38px;
       }
 
-      .left-panel {
-        top: auto;
-        left: 0.6rem;
-        bottom: 5.2rem;
-        transform: none;
-        flex-direction: row;
-        gap: 0.25rem;
-        padding: 0.45rem;
+      /* 🔥 SMART ADAPTIVE UI */
+
+      .panel {
+        scale: 0.92;
       }
 
-      .right-panel {
-        top: auto;
-        right: 0.6rem;
-        bottom: 5.2rem;
-        transform: none;
-        flex-direction: row;
-        gap: 0.25rem;
-        padding: 0.45rem;
+      /* 📱 PORTRAIT */
+      @media (orientation: portrait) {
+
+        .left-panel {
+          top: auto;
+          left: 50%;
+          bottom: 5.5rem;
+          transform: translateX(-50%);
+          flex-direction: row;
+          gap: 0.3rem;
+          padding: 0.45rem;
+        }
+
+        .right-panel {
+          top: auto;
+          left: 50%;
+          bottom: 9.5rem;
+          transform: translateX(-50%);
+          flex-direction: row;
+          gap: 0.3rem;
+          padding: 0.45rem;
+        }
+      }
+
+      /* 📺 LANDSCAPE */
+      @media (orientation: landscape) {
+
+        .left-panel {
+          top: 50%;
+          left: 0.6rem;
+          transform: translateY(-50%);
+          flex-direction: column;
+        }
+
+        .right-panel {
+          top: 50%;
+          right: 0.6rem;
+          left: auto;
+          transform: translateY(-50%);
+          flex-direction: column;
+        }
       }
 
       .left-panel .divider-h,

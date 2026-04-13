@@ -421,25 +421,35 @@
         padding: 0.45rem;
       }
 
-      /* ⚡ FLOATING ACTION BUTTONS (RIGHT SIDE) */
       .right-panel {
+        display: inline-flex;
+        /* 🔥 MOST IMPORTANT FIX */
+
         opacity: 0.95;
         top: 42%;
         right: 0.6rem;
         left: auto;
         bottom: auto;
         transform: translateY(-50%);
+
         flex-direction: column;
         align-items: center;
+        justify-content: center;
+
         gap: 0.3rem;
-        padding: 0.4rem;
-        height: auto;
+        padding: 0.35rem;
+
+        height: fit-content;
+        /* 🔥 FORCE SHRINK */
+        width: fit-content;
+        /* 🔥 FORCE SHRINK */
+
         z-index: 20;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 
         background: rgba(255, 255, 255, 0.85);
         backdrop-filter: blur(12px);
         border-radius: 12px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
       }
 
       .left-panel .divider-h {
